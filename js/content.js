@@ -526,7 +526,8 @@
       { targets: ['exit'] }
     ],
     OBJ: {
-      door:  'A locked door at the back of the kitchens. P1 has the keypad; P2 has the code.',
+      cloak: 'Staff only past the kitchen door. Get Assane into the right uniform first — the cloakroom is by the stairs.',
+      door:  'A padlocked gate at the back of the kitchens. P1 has the keys; P2 knows which is which.',
       after: 'Up through the ring. The desk releases the vault, and the vault holds the lot.',
       out:   'Assane has it and the monitors are dead. The plan shows no way out. Benjamin’s procedures might.',
       dark:  'The power is gone. Assane still has his phone; Benjamin has the procedures — the way out is in them.'
@@ -534,24 +535,30 @@
     DOORS: [
       { x: 20,  y: 5,  locked: true,  mark: 'trident',  to: 'LA RÉSERVE' },
       { x: 11, y: 12,  locked: false, mark: 'chevrons', to: 'BUREAU' },
-      { x: 8,  y: 16, locked: true,  mark: 'dbar',     to: 'GALERIE BASSE' },
+      { x: 8,  y: 16, locked: true,  mark: 'lock',     to: 'GALERIE BASSE' },
     ],
     MODULES: [
-      { id: 'porte',       x: 8,  y: 17, name: 'LA PORTE',       icon: 'lock' },
-      { id: 'deguisement', x: 5, y: 16, name: 'LE DÉGUISEMENT', icon: 'coat', optional: true },
+      /* staff only: the padlock will not open for a man out of uniform, so
+         the cloakroom is not optional on this contract */
+      { id: 'grille',      x: 8,  y: 17, name: 'LA GRILLE',      icon: 'lock', needs: 'deguisement',
+        refuse: { title: 'STAFF ONLY', line: 'Assane isn’t in uniform. Someone would ask questions.' } },
+      { id: 'deguisement', x: 5, y: 16, name: 'LE DÉGUISEMENT', icon: 'coat' },
       { id: 'bureau',      x: 18, y: 14,  name: 'LE BUREAU',      icon: 'desk' },
       { id: 'coffre',      x: 18,  y: 3,  name: 'LE COFFRE',      icon: 'safe' }
     ],
 
-    /* the same cipher as contract three, a different zero, and one fewer try */
-    PORTE: {
-      code: '7180',
-      sign: 'SALLE 10',
-      zero: 'star4',
+    /* LA GRILLE, contract one's handshake on the kitchen gate. Same padlock
+       and the same three keys — the trident is painted into
+       art/grille-padlock.png, so the lock cannot change — but the card pairs
+       the tags with different keys, so contract one's answer does not carry
+       over. Here the trident opens with the old warded key. */
+    GRILLE: {
+      lock: 'trident',
+      board: [{ sym: 'crescent', key: 3, shape: 'keyTeeth',  at: 0.02, wide: 0.36 },
+              { sym: 'ladder',   key: 2, shape: 'keyHoles',  at: 0.38, wide: 0.28 },
+              { sym: 'trident',  key: 1, shape: 'keyWard',   at: 0.66, wide: 0.32 }],
       door: { x: 8, y: 16 },
-      ring: ['drop', 'star4', 'spiral', 'chevrons', 'hook',
-             'bisect', 'crescent', 'trident', 'ladder', 'backz'],
-      fails: 2
+      rattle: 3
     },
 
     /* contract one's dial, a new serial. Three rows share it; the ring colour
@@ -684,7 +691,7 @@
     CLAVIER: { code: '8809', worn: ['0', '8', '9'], zone: 'GALERIE HAUTE' },
 
     PROCEDURES: [
-      { k: 'DOOR CODES',   v: 'Held as symbols only. The ring is printed in order; the zero is not marked. Two attempts, then a call.' },
+      { k: 'KITCHEN GATE', v: 'Padlocked. Staff in uniform only. The key card pairs each tag with its key.' },
       { k: 'LASER LINES',  v: 'The central corridor is beamed between rounds. Crossing one is not impossible, it is announced: every officer drops his round and converges for five minutes.' },
       { k: 'PATROLS',      v: 'One officer on the east stair, one across the upper gallery, one in the kitchens. They do not keep step.' },
       { k: 'CAMERAS',      v: 'CAM 1 covers the vault continuously. CAM 2 sweeps the office desk one beat in three.' },

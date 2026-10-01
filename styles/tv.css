@@ -136,6 +136,16 @@
 .room__toast.is-on{opacity:1;animation:pop .18s;}
 .room__toast.is-bad{background:var(--red);color:var(--on-color);}
 .room__toast.is-good{background:var(--gold);}
+/* the refuse card: a module that will not open yet. Holds while he stands there. */
+.room__gate{
+  position:absolute;left:50%;top:18px;transform:translateX(-50%);
+  display:none;flex-direction:column;align-items:center;gap:4px;
+  padding:10px 22px;border:var(--stroke) solid var(--ink);border-radius:10px;
+  background:var(--paper);text-align:center;max-width:70%;
+}
+.room__gate.is-on{display:flex;animation:pop .18s;}
+.room__gate b{font-size:16px;letter-spacing:.24em;color:var(--red);}
+.room__gate span{font-size:13px;letter-spacing:.04em;color:var(--ink);}
 
 /* --- MODULE consequence --- */
 .tvview--module{align-items:center;justify-content:center;background:var(--stone);}
