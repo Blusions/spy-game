@@ -398,3 +398,19 @@
 .tv__screen .room__toast.is-good{background:#090C11;color:#FD6A1A;border-color:#778495;}
 .tvbar__phase{background:#FD6A1A;color:#090C11;border-color:#778495;}
 .tvbar__phase.is-night{background:#090C11;color:#FD6A1A;}
+
+/* --- dev skip buttons (js/devtools.js): local copies only, never in the room --- */
+.devtools{
+  position:absolute;top:52px;right:8px;z-index:50;
+  display:flex;align-items:center;gap:6px;
+  padding:5px 7px;border-radius:6px;
+  background:rgba(0,0,0,.7);border:1px dashed var(--gold);
+  font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--gold);
+}
+.devtools[hidden]{display:none;}
+.devtools button{
+  font:inherit;color:var(--ink);background:transparent;cursor:pointer;
+  border:1px solid var(--ink-soft);border-radius:4px;padding:3px 7px;
+}
+.devtools button:hover:not(:disabled){border-color:var(--gold);color:var(--gold);}
+.devtools button:disabled{opacity:.35;cursor:default;}
